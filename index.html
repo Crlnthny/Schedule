@@ -22,9 +22,47 @@
       background-color: #f0f0f0;
       color: #333;
     }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .psychology-symbol {
+      position: absolute;
+      opacity: 0.5;
+      animation: float 6s ease-in-out infinite;
+      font-size: 30px;
+    }
+
+    .brain {
+      top: 20%;
+      left: 5%;
+    }
+
+    .atom {
+      top: 60%;
+      left: 15%;
+    }
+
+    .eye {
+      top: 40%;
+      left: 30%;
+    }
+
+    .puzzle {
+      top: 70%;
+      left: 45%;
+    }
+
+    .dna {
+      top: 25%;
+      left: 60%;
+    }
   
     #container {
       margin-top: 30px;
+      
     }
   
     #header h3 {
@@ -73,7 +111,7 @@
   <div id="header" class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex align-items-center">
         <img src="1.jpg" alt="Image" style="height: 120px; margin-right: 5px;" class="align-self-start rounded-circle">
-        <h3 class="align-self-center">Name: </h3>
+        <h3 class="align-self-center">Name: Micah Ella Escarilla apaka panget </h3>
     </div>
     <div class="d-flex flex-column flex-sm-row align-items-center">
         <div class="text-center text-sm-start">
@@ -191,7 +229,36 @@
       cell.style.color = ''; // Revert text color to default
     }, 2000); // Remove highlight after 2 seconds
   }
+
+  function createPsychologySymbols() {
+    const symbols = [
+      { class: 'brain', symbol: '🧠' },
+      { class: 'atom', symbol: '⚛️' },
+      { class: 'eye', symbol: '👁️' },
+      { class: 'puzzle', symbol: '🧩' },
+      { class: 'dna', symbol: '🧬' },
+      { class: 'heart', symbol: '❤️' }, // Additional symbols
+      { class: 'star', symbol: '⭐' },
+      { class: 'flower', symbol: '🌸' }
+    ];
+
+    const container = document.body;
+    symbols.forEach(symbol => {
+      const span = document.createElement('span');
+      span.classList.add('psychology-symbol', symbol.class);
+      span.textContent = symbol.symbol;
+      // Generate random position
+      const randomTop = Math.random() * 80 + 10; // Random top position between 10% and 90%
+      const randomLeft = Math.random() * 80 + 10; // Random left position between 10% and 90%
+      span.style.top = `${randomTop}%`;
+      span.style.left = `${randomLeft}%`;
+      container.appendChild(span);
+    });
+  }
+
+  createPsychologySymbols();
 </script>
+
     
 </body>
 </html>
