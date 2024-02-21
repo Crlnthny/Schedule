@@ -12,15 +12,15 @@
   <style>
     /* Custom color scheme */
     :root {
-      --primary-color: #000000; /* Blue */
-      --secondary-color: #6c757d; /* Grey */
-      --highlight-color: #837f7f; /* Yellow */
+      --primary-color: #000000; /* Black */
+      --secondary-color: #000000; /* Black */
+      --highlight-color: #ffffff; /* White */
     }
   
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
-      color: #333;
+      color: var(--primary-color); /* Black */
     }
     @keyframes float {
       0% { transform: translateY(0); }
@@ -33,43 +33,21 @@
       opacity: 0.5;
       animation: float 6s ease-in-out infinite;
       font-size: 30px;
+      color: var(--primary-color); /* Black */
     }
 
-    .brain {
-      top: 20%;
-      left: 5%;
-    }
-
-    .atom {
-      top: 60%;
-      left: 15%;
-    }
-
-    .eye {
-      top: 40%;
-      left: 30%;
-    }
-
-    .puzzle {
-      top: 70%;
-      left: 45%;
-    }
-
-    .dna {
-      top: 25%;
-      left: 60%;
+    .brain, .atom, .eye, .puzzle, .dna, .heart, .star, .flower {
+      color: var(--secondary-color); /* Black */
     }
   
     #container {
       margin-top: 30px;
-      
     }
   
     #header h3 {
       margin: 0 20px;
-      color: var(--primary-color);
-      font-family: Arial, sans-serif; /* Adding font family */
-      font-weight: bold; /* Making it bold */
+      color: var(--primary-color); /* Black */
+      font-family: Arial, sans-serif; /* Adding font family */ 
     }
     
   
@@ -85,22 +63,29 @@
     table td {
       border: 1px solid #ddd;
       padding: 8px;
+      color: var(--primary-color); /* Black */
     }
   
     /* Animation for highlighting */
     .highlight {
       animation: highlight 1s ease-in-out;
-      background-color: #f9a825; /* Yellow */
-      color: #333; /* Black */
+      background-color: var(--highlight-color); /* White */
+      color: var(--primary-color); /* Black */
     }
   
     @keyframes highlight {
       0% {
-        background-color: var(--highlight-color);
+        background-color: var(--highlight-color); /* White */
       }
       100% {
         background-color: transparent;
       }
+    }
+    
+    /* Rounded frame for the image */
+    #header img {
+      border-radius: 50%; /* Make it a circle */
+      border: 4px solid var(--primary-color); /* Black border */
     }
   </style>
   
@@ -110,7 +95,7 @@
 <div id="container" class="container">
   <div id="header" class="d-flex justify-content-between align-items-center flex-wrap">
     <div class="d-flex align-items-center">
-        <img src="1.jpg" alt="Image" style="height: 120px; margin-right: 5px;" class="align-self-start rounded-circle">
+        <img src="2.png" alt="Image" style="height: 120px; margin-right: 5px;" class="align-self-start">
         <h3 class="align-self-center">Name: Micah Ella Escarilla apaka panget </h3>
     </div>
     <div class="d-flex flex-column flex-sm-row align-items-center">
