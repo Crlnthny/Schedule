@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Psychology Class Schedule</title>
+  <title>Class Schedule</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
@@ -12,22 +12,19 @@
   <style>
     /* Custom color scheme */
     :root {
-      --primary-color: #0066CC; /* Blue */
+      --primary-color: #000000; /* Blue */
       --secondary-color: #6c757d; /* Grey */
-      --highlight-color: #FF9900; /* Orange */
+      --highlight-color: #837f7f; /* Yellow */
     }
   
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
       color: #333;
-      overflow: hidden; /* Ensure the animations stay within the viewport */
-      position: relative; /* Needed for absolute positioning of animations */
     }
   
     #container {
       margin-top: 30px;
-      position: relative; /* Needed for absolute positioning of child elements */
     }
   
     #header h3 {
@@ -67,67 +64,6 @@
         background-color: transparent;
       }
     }
-    
-    /* Animation for clouds */
-    .cloud {
-      position: absolute;
-      top: 20%;
-      left: -200px; /* Initially position it outside the viewport */
-      opacity: 0.8; /* Adjust opacity as needed */
-      animation: moveClouds 20s linear infinite;
-    }
-    
-    @keyframes moveClouds {
-      0% {
-        transform: translateX(-200px);
-      }
-      100% {
-        transform: translateX(calc(100% + 200px)); /* Move it all the way to the right */
-      }
-    }
-    
-    /* Animation for psychology symbols */
-    .psychology-symbol {
-      position: absolute;
-      opacity: 0.6; /* Adjust opacity as needed */
-      animation-duration: 10s; /* Adjust animation duration as needed */
-      animation-iteration-count: infinite;
-      transform-origin: center;
-    }
-    
-    /* Brain animation */
-    .brain {
-      width: 100px; /* Adjust size as needed */
-      top: 50%; /* Position it vertically in the middle */
-      left: -100px; /* Initially position it outside the viewport */
-      animation-name: moveBrain;
-    }
-    
-    @keyframes moveBrain {
-      0% {
-        transform: translateY(-50%) translateX(-200px) rotate(0deg);
-      }
-      100% {
-        transform: translateY(-50%) translateX(calc(100% + 200px)) rotate(360deg); /* Move it all the way to the right and rotate */
-      }
-    }
-    
-    /* Neuron animation */
-    .neuron {
-      width: 50px; /* Adjust size as needed */
-      top: 70%; /* Adjust vertical position as needed */
-      left: -50px; /* Initially position it outside the viewport */
-      animation-name: moveNeuron;
-    }
-    
-    @keyframes moveNeuron {
-      0% {
-        transform: translateY(-50%) translateX(-200px) rotate(0deg);
-      }
-      100% {
-        transform: translateY(-50%) translateX(calc(100% + 200px)) rotate(-360deg); /* Move it all the way to the right and rotate */
-      }
-    }
   </style>
   
 </head>
@@ -147,7 +83,7 @@
   </div>
       <br>
   <div id="schedule" class="table-responsive">
-    <h2 class="text-center mb-4">Psychology Class Schedule</h2>
+    <h2 class="text-center mb-4">Class Schedule</h2>
     <table class="table table-striped text-center">
       <thead class="bg-secondary text-black">
         <tr>
@@ -220,7 +156,6 @@
       </tbody>
     </table>
   </div>
-</div>
 
 <!-- Bootstrap JS (Optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -257,40 +192,6 @@
     }, 2000); // Remove highlight after 2 seconds
   }
 </script>
-
-<!-- JavaScript for animations -->
-<script>
-  // Function to create clouds
-  function createCloud() {
-    const cloud = document.createElement('div');
-    cloud.classList.add('cloud');
-    cloud.style.top = `${Math.random() * 20 + 10}%`; // Randomize vertical position
-    document.body.appendChild(cloud);
-  }
-
-  // Function to create psychology symbols (brain, neuron, and more)
-  function createPsychologySymbol(className, icon, color) {
-    const symbol = document.createElement('i');
-    symbol.classList.add('psychology-symbol', className);
-    symbol.classList.add('fas');
-    symbol.classList.add(icon);
-    symbol.style.color = color; // Set color
-    symbol.style.opacity = '0.4'; // Adjust opacity
-    symbol.style.left = `${Math.random() * 200}%`; // Randomize horizontal position
-    document.body.appendChild(symbol);
-  }
-
-  // Create initial clouds and psychology symbols
-  for (let i = 0; i < 10; i++) {
-    createCloud();
-    createPsychologySymbol('brain', 'fa-brain', 'blue'); // Blue
-    createPsychologySymbol('neuron', 'fa-network-wired', 'green'); // Green
-    createPsychologySymbol('eye', 'fa-eye', 'purple'); // Purple
-    createPsychologySymbol('hands', 'fa-hands-helping', 'orange'); // Orange
-    createPsychologySymbol('book', 'fa-book-open', 'red'); // Red
-  }
-</script>
-
     
 </body>
 </html>
