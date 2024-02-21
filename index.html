@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psychology Class Schedule</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* Custom color scheme */
+    :root {
+      --primary-color: #0066CC; /* Blue */
+      --secondary-color: #6c757d; /* Grey */
+      --highlight-color: #FF9900; /* Orange */
+    }
+  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      overflow: hidden; /* Ensure the animations stay within the viewport */
+      position: relative; /* Needed for absolute positioning of animations */
+    }
+  
+    #container {
+      margin-top: 30px;
+      position: relative; /* Needed for absolute positioning of child elements */
+    }
+  
+    #header h3 {
+      margin: 0 20px;
+      color: var(--primary-color);
+      font-family: Arial, sans-serif; /* Adding font family */
+      font-weight: bold; /* Making it bold */
+    }
+    
+  
+    #schedule {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+  
+    /* Added subtle border and padding to cells */
+    table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+  
+    /* Animation for highlighting */
+    .highlight {
+      animation: highlight 1s ease-in-out;
+      background-color: #f9a825; /* Yellow */
+      color: #333; /* Black */
+    }
+  
+    @keyframes highlight {
+      0% {
+        background-color: var(--highlight-color);
+      }
+      100% {
+        background-color: transparent;
+      }
+    }
+    
+    /* Animation for clouds */
+    .cloud {
+      position: absolute;
+      top: 20%;
+      left: -200px; /* Initially position it outside the viewport */
+      opacity: 0.8; /* Adjust opacity as needed */
+      animation: moveClouds 20s linear infinite;
+    }
+    
+    @keyframes moveClouds {
+      0% {
+        transform: translateX(-200px);
+      }
+      100% {
+        transform: translateX(calc(100% + 200px)); /* Move it all the way to the right */
+      }
+    }
+    
+    /* Animation for psychology symbols */
+    .psychology-symbol {
+      position: absolute;
+      opacity: 0.6; /* Adjust opacity as needed */
+      animation-duration: 10s; /* Adjust animation duration as needed */
+      animation-iteration-count: infinite;
+      transform-origin: center;
+    }
+    
+    /* Brain animation */
+    .brain {
+      width: 100px; /* Adjust size as needed */
+      top: 50%; /* Position it vertically in the middle */
+      left: -100px; /* Initially position it outside the viewport */
+      animation-name: moveBrain;
+    }
+    
+    @keyframes moveBrain {
+      0% {
+        transform: translateY(-50%) translateX(-200px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-50%) translateX(calc(100% + 200px)) rotate(360deg); /* Move it all the way to the right and rotate */
+      }
+    }
+    
+    /* Neuron animation */
+    .neuron {
+      width: 50px; /* Adjust size as needed */
+      top: 70%; /* Adjust vertical position as needed */
+      left: -50px; /* Initially position it outside the viewport */
+      animation-name: moveNeuron;
+    }
+    
+    @keyframes moveNeuron {
+      0% {
+        transform: translateY(-50%) translateX(-200px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-50%) translateX(calc(100% + 200px)) rotate(-360deg); /* Move it all the way to the right and rotate */
+      }
+    }
+  </style>
+  
+</head>
+<body>
+
+<div id="container" class="container">
+  <div id="header" class="d-flex justify-content-between align-items-center flex-wrap">
+    <div class="d-flex align-items-center">
+        <img src="1.jpg" alt="Image" style="height: 120px; margin-right: 5px;" class="align-self-start rounded-circle">
+        <h3 class="align-self-center">Name: </h3>
+    </div>
+    <div class="d-flex flex-column flex-sm-row align-items-center">
+        <div class="text-center text-sm-start">
+            <h3 id="current-time"></h3>
+        </div>
+    </div>
+  </div>
+      <br>
+  <div id="schedule" class="table-responsive">
+    <h2 class="text-center mb-4">Psychology Class Schedule</h2>
+    <table class="table table-striped text-center">
+      <thead class="bg-secondary text-black">
+        <tr>
+          <th class="border border-dark">Time</th>
+          <th class="border border-dark">Monday</th>
+          <th class="border border-dark">Tuesday</th>
+          <th class="border border-dark">Wednesday</th>
+          <th class="border border-dark">Thursday</th>
+          <th class="border border-dark">Friday</th>
+        </tr>
+      </thead>
+
+      <tbody class="text-center">
+        <tr>
+          <td class="border border-dark">08:00 AM - 10:00 AM</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-dumbbell"></i> PE 22</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+        </tr>
+        <tr>
+          <td class="border border-dark">11:00 AM - 4:00 PM</td>
+          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-brain"></i> PSYCH 203</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+        </tr>
+        <tr>
+          <td class="border border-dark">11:00 AM - 2:00 PM</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-child"></i> PSY ELEC 2</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+        </tr>
+        <tr>
+          <td class="border border-dark">03:00 PM - 06:00 PM</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-atom"></i> PSYCH 204</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+        </tr>
+        <tr>
+          <td class="border border-dark">01:00 PM - 03:00 PM</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-briefcase"></i> OLIVARIAN 202</td>
+          <td class="border border-dark"></td>
+        </tr>
+        <tr>
+          <td class="border border-dark">04:00 PM - 07:00 PM</td>
+          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-book-open"></i> RIZAL</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+        </tr>
+        <tr>
+          <td class="border border-dark">05:00 PM - 08:00 PM</td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"></td>
+          <td class="border border-dark"><i class="fas fa-chalkboard-teacher"></i> HUM 1</td>
+          <td class="border border-dark"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Font Awesome -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+<script>
+  function updateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('current-time').textContent = `Date: ${year}-${month}-${day} / ${hours}:${minutes}:${seconds}`;
+  }
+    
+  updateTime();
+  setInterval(updateTime, 1000);
+    
+  function exportToCalendar() {
+    // Add code to export schedule to Google Calendar
+    alert('Exporting schedule to Google Calendar...');
+  }
+
+  function highlightSubject(cell) {
+    cell.style.color = 'black'; // Change text color to black
+    cell.classList.add('highlight');
+    setTimeout(() => {
+      cell.classList.remove('highlight');
+      cell.style.color = ''; // Revert text color to default
+    }, 2000); // Remove highlight after 2 seconds
+  }
+</script>
+
+<!-- JavaScript for animations -->
+<script>
+  // Function to create clouds
+  function createCloud() {
+    const cloud = document.createElement('div');
+    cloud.classList.add('cloud');
+    cloud.style.top = `${Math.random() * 20 + 10}%`; // Randomize vertical position
+    document.body.appendChild(cloud);
+  }
+
+  // Function to create psychology symbols (brain, neuron, and more)
+  function createPsychologySymbol(className, icon, color) {
+    const symbol = document.createElement('i');
+    symbol.classList.add('psychology-symbol', className);
+    symbol.classList.add('fas');
+    symbol.classList.add(icon);
+    symbol.style.color = color; // Set color
+    symbol.style.opacity = '0.4'; // Adjust opacity
+    symbol.style.left = `${Math.random() * 200}%`; // Randomize horizontal position
+    document.body.appendChild(symbol);
+  }
+
+  // Create initial clouds and psychology symbols
+  for (let i = 0; i < 10; i++) {
+    createCloud();
+    createPsychologySymbol('brain', 'fa-brain', 'blue'); // Blue
+    createPsychologySymbol('neuron', 'fa-network-wired', 'green'); // Green
+    createPsychologySymbol('eye', 'fa-eye', 'purple'); // Purple
+    createPsychologySymbol('hands', 'fa-hands-helping', 'orange'); // Orange
+    createPsychologySymbol('book', 'fa-book-open', 'red'); // Red
+  }
+</script>
+
+    
+</body>
+</html>
