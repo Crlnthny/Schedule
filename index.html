@@ -3,242 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Class Schedule</title>
+  <title>Class Schedule</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-QGX4b8OlHivJ5Gqz/4rQCJwFf6NUBjwkaRt2ZzstYDnApSWu1QpkjhftI5Fz+L3Czmg2MyQtX5oWcuNKejZTXw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
   <style>
-    /* Custom color scheme */
-    :root {
-      --primary-color: #000000; /* Black */
-      --secondary-color: #000000; /* Black */
-      --highlight-color: #ffffff; /* White */
-    }
-  
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: var(--primary-color); /* Black */
-    }
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-
-    .psychology-symbol {
-      position: absolute;
-      opacity: 0.5;
-      animation: float 6s ease-in-out infinite;
-      font-size: 30px;
-      color: var(--primary-color); /* Black */
-    }
-
-    .brain, .atom, .eye, .puzzle, .dna, .heart, .star, .flower {
-      color: var(--secondary-color); /* Black */
-    }
-  
-    #container {
-      margin-top: 30px;
-    }
-  
-    #header h3 {
-      margin: 0 20px;
-      color: var(--primary-color); /* Black */
-      font-family: Arial, sans-serif; /* Adding font family */ 
-    }
-    
-  
-    #schedule {
-      background-color: #fff;
-      border-radius: 10px;
+      background-color: #f8f9fa;
       padding: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      overflow-x: auto; /* Allow horizontal scrolling */
+      color: #343a40;
     }
-  
-    /* Added subtle border and padding to cells */
-    table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      color: var(--primary-color); /* Black */
+
+    .schedule-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
-  
-    /* Animation for highlighting */
-    .highlight {
-      animation: highlight 1s ease-in-out;
-      background-color: var(--highlight-color); /* White */
-      color: var(--primary-color); /* Black */
+
+    .schedule-header img {
+      width: 100px;
+      border-radius: 50%;
     }
-  
-    @keyframes highlight {
-      0% {
-        background-color: var(--highlight-color); /* White */
-      }
-      100% {
-        background-color: transparent;
-      }
+
+    .schedule-header .datetime {
+      text-align: right;
     }
-     
+
+    .time-col {
+      min-width: 80px;
+      background-color: #e9ecef;
+      text-align: center;
+    }
+
+    .class-col {
+      min-width: 150px;
+      background-color: #f8f9fa;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid #dee2e6;
+    }
+
+    .class-col:hover {
+      background-color: #dee2e6;
+    }
+
+    .active {
+      background-color: #474747 !important;
+      color: white !important;
+    }
+
   </style>
-  
 </head>
 <body>
-
-<div id="container" class="container">
-  <div id="header" class="d-flex justify-content-between align-items-center flex-wrap">
-    <div class="d-flex align-items-center">
-        <img src="4.jpg" alt="Image" style="height: 120px; margin-right: 5px;" class="align-self-start rounded-circle">
-        <h3 class="align-self-center">Name: Micah Ella Escarilla The Horny Gorilla </h3>
-    </div>
-    <div class="d-flex flex-column flex-sm-row align-items-center">
-        <div class="text-center text-sm-start">
-            <h3 id="current-time"></h3>
-        </div>
-    </div>
+<header class="schedule-header">
+  <div>
+    <img src="4.jpg" alt="Profile Picture">
+    <h1>John Doe</h1>
   </div>
-      <br>
-  <div id="schedule" class="table-responsive">
-    <h2 class="text-center mb-4">Class Schedule</h2>
-    <table class="table table-striped text-center">
-      <thead class="bg-secondary text-black">
-        <tr>
-          <th class="border border-dark">Time</th>
-          <th class="border border-dark">Monday</th>
-          <th class="border border-dark">Tuesday</th>
-          <th class="border border-dark">Wednesday</th>
-          <th class="border border-dark">Thursday</th>
-          <th class="border border-dark">Friday</th>
-        </tr>
+  <div class="datetime">
+    <p>Date: <span id="current-date"></span></p>
+    <p>Time: <span id="current-time"></span></p>
+  </div>
+</header>
+<section class="container">
+  <h2 class="text-center mb-4">Class Schedule</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered schedule-table">
+      <thead>
+      <tr>
+        <th class="time-col">Time</th>
+        <th class="class-col">Monday</th>
+        <th class="class-col">Tuesday</th>
+        <th class="class-col">Wednesday</th>
+        <th class="class-col">Thursday</th>
+        <th class="class-col">Friday</th>
+      </tr>
       </thead>
-
-      <tbody class="text-center">
-        <tr>
-          <td class="border border-dark">08:00 AM - 10:00 AM</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-dumbbell"></i> PE 22</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-        </tr>
-        <tr>
-          <td class="border border-dark">11:00 AM - 4:00 PM</td>
-          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-brain"></i> PSYCH 203</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-        </tr>
-        <tr>
-          <td class="border border-dark">11:00 AM - 2:00 PM</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-child"></i> PSY ELEC 2</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-        </tr>
-        <tr>
-          <td class="border border-dark">03:00 PM - 06:00 PM</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-atom"></i> PSYCH 204</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-        </tr>
-        <tr>
-          <td class="border border-dark">01:00 PM - 03:00 PM</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-briefcase"></i> OLIVARIAN 202</td>
-          <td class="border border-dark"></td>
-        </tr>
-        <tr>
-          <td class="border border-dark">04:00 PM - 07:00 PM</td>
-          <td class="border border-dark" onclick="highlightSubject(this)"><i class="fas fa-book-open"></i> RIZAL</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-        </tr>
-        <tr>
-          <td class="border border-dark">05:00 PM - 08:00 PM</td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"></td>
-          <td class="border border-dark"><i class="fas fa-chalkboard-teacher"></i> HUM 1</td>
-          <td class="border border-dark"></td>
-        </tr>
+      <tbody id="schedule-body">
+      <!-- Class schedule will be dynamically generated here -->
       </tbody>
     </table>
   </div>
+</section>
 
-<!-- Bootstrap JS (Optional) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Font Awesome -->
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-
+<!-- Bootstrap JS (Optional, only needed if you require Bootstrap JavaScript features) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Custom JavaScript -->
 <script>
-  function updateTime() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    document.getElementById('current-time').textContent = `Date: ${year}-${month}-${day} / ${hours}:${minutes}:${seconds}`;
-  }
-    
-  updateTime();
-  setInterval(updateTime, 1000);
-    
-  function exportToCalendar() {
-    // Add code to export schedule to Google Calendar
-    alert('Exporting schedule to Google Calendar...');
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    // Update current date and time
+    function updateDateTime() {
+      var now = new Date();
+      var currentDate = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      var currentTime = now.toLocaleTimeString('en-US');
+      document.getElementById('current-date').textContent = currentDate;
+      document.getElementById('current-time').textContent = currentTime;
+    }
 
-  function highlightSubject(cell) {
-    cell.style.color = 'black'; // Change text color to black
-    cell.classList.add('highlight');
-    setTimeout(() => {
-      cell.classList.remove('highlight');
-      cell.style.color = ''; // Revert text color to default
-    }, 2000); // Remove highlight after 2 seconds
-  }
+    // Update date and time every second
+    setInterval(updateDateTime, 1000);
 
-  function createPsychologySymbols() {
-    const symbols = [
-      { class: 'brain', symbol: '🧠' },
-      { class: 'atom', symbol: '⚛️' },
-      { class: 'eye', symbol: '👁️' },
-      { class: 'puzzle', symbol: '🧩' },
-      { class: 'dna', symbol: '🧬' },
-      { class: 'heart', symbol: '❤️' }, // Additional symbols
-      { class: 'star', symbol: '⭐' },
-      { class: 'flower', symbol: '🌸' }
-    ];
-
-    const container = document.body;
-    symbols.forEach(symbol => {
-      const span = document.createElement('span');
-      span.classList.add('psychology-symbol', symbol.class);
-      span.textContent = symbol.symbol;
-      // Generate random position
-      const randomTop = Math.random() * 80 + 10; // Random top position between 10% and 90%
-      const randomLeft = Math.random() * 80 + 10; // Random left position between 10% and 90%
-      span.style.top = `${randomTop}%`;
-      span.style.left = `${randomLeft}%`;
-      container.appendChild(span);
+    // Interactive highlighting
+    document.querySelectorAll('.class-col').forEach(item => {
+      item.addEventListener('click', event => {
+        document.querySelectorAll('.class-col').forEach(item => {
+          item.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      });
     });
-  }
 
-  createPsychologySymbols();
+    // Generate class schedule
+var scheduleData = [
+{ time: "08:00 AM - 09:00 AM", monday: "", tuesday: "", wednesday: "<i class='fas fa-running'></i> PE 22", thursday: "", friday: "" },
+{ time: "11:00 AM - 04:00 PM", monday: "<i class='fas fa-brain'></i> PSYCH 203", tuesday: "", wednesday: "", thursday: "", friday: "" },
+{ time: "11:00 AM - 02:00 PM", monday: "", tuesday: "", wednesday: "<i class='fas fa-chalkboard'></i> PSY ELEC 2", thursday: "", friday: "" },
+{ time: "03:00 PM - 06:00 PM", monday: "", tuesday: "", wednesday: "<i class='fas fa-brain'></i> PSYCH 204", thursday: "", friday: "" },
+{ time: "01:00 PM - 03:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "<i class='fas fa-university'></i> OLIVARIAN 202", friday: "" },
+{ time: "04:00 PM - 07:00 PM", monday: "<i class='fas fa-book'></i> RIZAL", tuesday: "", wednesday: "", thursday: "", friday: "" },
+{ time: "05:00 PM - 08:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "<i class='fas fa-history'></i> HUM 1", friday: "" }
+];
+
+var scheduleBody = document.getElementById('schedule-body');
+scheduleData.forEach(schedule => {
+var row = document.createElement('tr');
+row.innerHTML = `
+  <td class="time-col">${schedule.time}</td>
+  <td class="class-col" id="mon-${schedule.time}">${schedule.monday}</td>
+  <td class="class-col" id="tue-${schedule.time}">${schedule.tuesday}</td>
+  <td class="class-col" id="wed-${schedule.time}">${schedule.wednesday}</td>
+  <td class="class-col" id="thu-${schedule.time}">${schedule.thursday}</td>
+  <td class="class-col" id="fri-${schedule.time}">${schedule.friday}</td>
+`;
+scheduleBody.appendChild(row);
+});
+
+
+    // Initial update
+    updateDateTime();
+  });
+
 </script>
-
-    
 </body>
 </html>
