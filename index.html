@@ -66,12 +66,61 @@
       background-color: #f8f9fa;
     }
 
+    /* Modal styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal content box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 10px;
+    animation-name: modal-animation;
+    animation-duration: 0.5s;
+  }
+
+  /* Modal animations */
+  @keyframes modal-animation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Quote container styles */
+  .quote-container {
+    text-align: center;
+  }
+
+  /* Quote styles */
+  .quote {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  /* Emoji styles */
+  .emoji {
+    font-size: 30px;
+  }
+
   </style>
 </head>
 <body>
 <header class="schedule-header">
   <div>
-    <img src="4.jpg" alt="Profile Picture">
+    <img src="2.png" alt="Profile Picture">
     <h3>Micah Ella Escarilla</h3>
   </div>
   <div class="datetime">
@@ -175,12 +224,20 @@
     var span = document.getElementsByClassName("close")[0];
 
     var quotes = [
-      "The only way to do great work is to love what you do. - Steve Jobs",
-      "In the middle of difficulty lies opportunity. - Albert Einstein",
-      "Believe you can and you're halfway there. - Theodore Roosevelt",
-      "Strive not to be a success, but rather to be of value. - Albert Einstein",
+      "Opinions are like orgasms... mine is more important and I really don't care if you have one",
+      "You can't say happiness wihout my penis",
+      "I promise to always be by your side. Or under you. Or on top",
+      "Roses are red. Violets are blue. I’m using my hand, but I’m thinking of you.",
+      "Dancing is a perpendicular expression of a horizontal desire.",
+      "Do you ever just look at somebody and wonder how they moan during sex.",
+      "Always start your day with a lot of SEX: S — mile; E — nergy; X — citement; so make SEX a daily habit, and you will always be SMILING!",
+      "Friday is my second favorite F word.",
+      "It may be between your legs, but it belongs to me. Understand?",
       // Add more quotes as needed
     ];
+
+    // Define an array of emojis for added flair
+    var emojis = ["🔫", "⛲", "🌟", "🚀", "🤪", "💦", "🤤", "🎉", "🍆", "🥵", "💋", "🥰"];
 
     span.onclick = function() {
       modal.style.display = "none";
@@ -192,13 +249,17 @@
       }
     }
 
+    // Generate a random index to select a quote from the array
     var randomIndex = Math.floor(Math.random() * quotes.length);
     var randomQuote = quotes[randomIndex];
+    var randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
     modal.style.display = "block";
     modalBody.innerHTML = `
-      <p>Here's a quote of the day for you:</p>
-      <blockquote>${randomQuote}</blockquote>
+      <div class="quote-container">
+        <p class="quote">${randomQuote}</p>
+        <p class="emoji">${randomEmoji}</p>
+      </div>
     `;
 
 
@@ -206,35 +267,22 @@
     updateDateTime();
   });
 
-  // Function to get personalized greetings
-  function getGreetings() {
-    var now = new Date();
-    var hour = now.getHours();
-
-    if (hour < 12) {
-      return "Good morning";
-    } else if (hour < 18) {
-      return "Good afternoon";
-    } else {
-      return "Good evening";
-    }
-  }
 </script>
 
 <!-- Modal -->
 <div id="myModal" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Today's Schedule</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <!-- Content will be dynamically generated here -->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Today's Quotes</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        </div>
       </div>
     </div>
   </div>
-</div>
+  
 
 </body>
 </html>
