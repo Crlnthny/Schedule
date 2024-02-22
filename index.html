@@ -72,7 +72,7 @@
 <header class="schedule-header">
   <div>
     <img src="4.jpg" alt="Profile Picture">
-    <h3>John Doe</h3>
+    <h3>Micah Ella Escarilla</h3>
   </div>
   <div class="datetime">
     <p>Date: <span id="current-date"></span></p>
@@ -104,103 +104,140 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Custom JavaScript -->
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Update current date and time
-    function updateDateTime() {
-      var now = new Date();
-      var currentDate = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      var currentTime = now.toLocaleTimeString('en-US');
-      document.getElementById('current-date').textContent = currentDate;
-      document.getElementById('current-time').textContent = currentTime;
-
-      // Highlight current day
-      var dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-      var tableRows = document.querySelectorAll('#schedule-body tr');
-      tableRows.forEach(row => {
-        var cells = row.querySelectorAll('.class-col');
-        cells.forEach((cell, index) => {
-          if (index === dayOfWeek) {
-            cell.style.backgroundColor = '#dee2e6';
-          } else {
-            cell.style.backgroundColor = '#ffffff';
-          }
+    document.addEventListener("DOMContentLoaded", function() {
+      // Update current date and time
+      function updateDateTime() {
+        var now = new Date();
+        var currentDate = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        var currentTime = now.toLocaleTimeString('en-US');
+        document.getElementById('current-date').textContent = currentDate;
+        document.getElementById('current-time').textContent = currentTime;
+    
+        // Highlight current day
+        var dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        if (dayOfWeek === 0) {
+          dayOfWeek = 7; // Adjust Sunday's index to 7 if it's the first day of the week
+        }
+        var tableRows = document.querySelectorAll('#schedule-body tr');
+        tableRows.forEach(row => {
+          var cells = row.querySelectorAll('.class-col');
+          cells.forEach((cell, index) => {
+            if (index === (dayOfWeek - 1)) { // Adjusted index to start from Monday
+              cell.style.backgroundColor = '#dee2e6';
+            } else {
+              cell.style.backgroundColor = '#ffffff';
+            }
+          });
+        });
+      }
+    
+      // Update date and time every second
+      setInterval(updateDateTime, 1000);
+    
+      // Interactive highlighting
+      document.querySelectorAll('.class-col').forEach(item => {
+        item.addEventListener('click', event => {
+          document.querySelectorAll('.class-col').forEach(item => {
+            item.classList.remove('active');
+          });
+          event.target.classList.add('active');
         });
       });
-    }
-
-    // Update date and time every second
-    setInterval(updateDateTime, 1000);
-
-    // Interactive highlighting
-    document.querySelectorAll('.class-col').forEach(item => {
-      item.addEventListener('click', event => {
-        document.querySelectorAll('.class-col').forEach(item => {
-          item.classList.remove('active');
-        });
-        event.target.classList.add('active');
+    
+      // Generate class schedule
+      var scheduleData = [
+        { time: "08:00 AM - 09:00 AM", monday: "", tuesday: "", wednesday: "PE 22 - PATH - FIT IV (World Dances)", thursday: "", friday: "" },
+        { time: "11:00 AM - 04:00 PM", monday: "PSYCH 203 - Experimental Psychology", tuesday: "", wednesday: "", thursday: "", friday: "" },
+        { time: "11:00 AM - 02:00 PM", monday: "", tuesday: "", wednesday: "PSY ELEC 2 - Educational Psychology", thursday: "", friday: "" },
+        { time: "03:00 PM - 06:00 PM", monday: "", tuesday: "", wednesday: "PSYCH 204 - Developmental Psychology", thursday: "", friday: "" },
+        { time: "01:00 PM - 03:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "OLIVARIAN 202 - Career Development Orientation ", friday: "" },
+        { time: "04:00 PM - 07:00 PM", monday: "RIZAL - The Life and Works of Rizal", tuesday: "", wednesday: "", thursday: "", friday: "" },
+        { time: "05:00 PM - 08:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "HUM 1 - Arts Appreciation", friday: "" }
+      ];
+    
+      var scheduleBody = document.getElementById('schedule-body');
+      scheduleData.forEach(schedule => {
+        var row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="time-col">${schedule.time}</td>
+          <td class="class-col" id="mon-${schedule.time}">${schedule.monday}</td>
+          <td class="class-col" id="tue-${schedule.time}">${schedule.tuesday}</td>
+          <td class="class-col" id="wed-${schedule.time}">${schedule.wednesday}</td>
+          <td class="class-col" id="thu-${schedule.time}">${schedule.thursday}</td>
+          <td class="class-col" id="fri-${schedule.time}">${schedule.friday}</td>
+        `;
+        scheduleBody.appendChild(row);
       });
-    });
-
-    // Generate class schedule
-    var scheduleData = [
-    { time: "08:00 AM - 09:00 AM", monday: "", tuesday: "", wednesday: "PE 22 - PATH - FIT IV (World Dances)", thursday: "", friday: "" },
-    { time: "11:00 AM - 04:00 PM", monday: "PSYCH 203 - Experimental Psychology", tuesday: "", wednesday: "", thursday: "", friday: "" },
-    { time: "11:00 AM - 02:00 PM", monday: "", tuesday: "", wednesday: "PSY ELEC 2 - Educational Psychology", thursday: "", friday: "" },
-    { time: "03:00 PM - 06:00 PM", monday: "", tuesday: "", wednesday: "PSYCH 204 - Developmental Psychology", thursday: "", friday: "" },
-    { time: "01:00 PM - 03:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "OLIVARIAN 202 - Career Development Orientation ", friday: "" },
-    { time: "04:00 PM - 07:00 PM", monday: "RIZAL - The Life and Works of Rizal", tuesday: "", wednesday: "", thursday: "", friday: "" },
-    { time: "05:00 PM - 08:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "HUM 1 - Arts Appreciation", friday: "" }
-    ];
-
-    var scheduleBody = document.getElementById('schedule-body');
-    scheduleData.forEach(schedule => {
-      var row = document.createElement('tr');
-      row.innerHTML = `
-        <td class="time-col">${schedule.time}</td>
-        <td class="class-col" id="mon-${schedule.time}">${schedule.monday}</td>
-        <td class="class-col" id="tue-${schedule.time}">${schedule.tuesday}</td>
-        <td class="class-col" id="wed-${schedule.time}">${schedule.wednesday}</td>
-        <td class="class-col" id="thu-${schedule.time}">${schedule.thursday}</td>
-        <td class="class-col" id="fri-${schedule.time}">${schedule.friday}</td>
-      `;
-      scheduleBody.appendChild(row);
-    });
-
-    // Show modal if the current day has a schedule
-    var modal = document.getElementById('myModal');
-    var modalContent = document.getElementById('modal-content');
-    var span = document.getElementsByClassName("close")[0];
-
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-      if (event.target == modal) {
+    
+      // Show modal if the current day has a schedule
+      var modal = document.getElementById('myModal');
+      var modalBody = document.querySelector('.modal-body');
+      var span = document.getElementsByClassName("close")[0];
+    
+      span.onclick = function() {
         modal.style.display = "none";
       }
+    
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    
+      var dayOfWeek = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    if (dayOfWeek === 0) {
+    dayOfWeek = 7; // Adjust Sunday's index to 7 if it's the first day of the week
+    }
+    var todaySchedule = scheduleData[dayOfWeek]; // Corrected indexing
+    if (Object.values(todaySchedule).some(Boolean)) {
+    modal.style.display = "block";
+    var greetings = getGreetings();
+    var todayClasses = Object.values(todaySchedule).filter(classItem => classItem !== "");
+    modalBody.innerHTML = `
+        <p>${greetings}, you have the following schedule for today:</p>
+        <ul>
+        ${todayClasses.map(classItem => `<li>${classItem}</li>`).join('')}
+        </ul>
+        
+    `;
     }
 
-    var today = new Date().getDay() - 1; // Get index for the current day
-    var todaySchedule = scheduleData[today];
-    if (todaySchedule.monday || todaySchedule.tuesday || todaySchedule.wednesday || todaySchedule.thursday || todaySchedule.friday) {
-      modal.style.display = "block";
-      modalContent.innerHTML = `<p>You have a schedule for today: ${todaySchedule.monday || todaySchedule.tuesday || todaySchedule.wednesday || todaySchedule.thursday || todaySchedule.friday}</p>`;
+    
+      // Initial update
+      updateDateTime();
+    });
+    
+    // Function to get personalized greetings
+    function getGreetings() {
+      var now = new Date();
+      var hour = now.getHours();
+    
+      if (hour < 12) {
+        return "Good morning";
+      } else if (hour < 18) {
+        return "Good afternoon";
+      } else {
+        return "Good evening";
+      }
     }
-
-    // Initial update
-    updateDateTime();
-  });
-
-</script>
-
+    </script>
+    
 <!-- Modal -->
 <div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Today's Schedule</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Content will be dynamically generated here -->
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  
+  
 
 </body>
 </html>
