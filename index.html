@@ -10,7 +10,7 @@
   <!-- Custom CSS -->
   <style>
     body {
-      background-color: #f8f9fa;
+      background-color: #ffffff;
       padding: 20px;
       color: #343a40;
     }
@@ -33,16 +33,18 @@
 
     .time-col {
       min-width: 80px;
-      background-color: #e9ecef;
+      background-color: #f8f9fa;
       text-align: center;
+      color: #343a40;
     }
 
     .class-col {
       min-width: 150px;
-      background-color: #f8f9fa;
+      background-color: #ffffff;
       text-align: center;
       cursor: pointer;
       border: 2px solid #dee2e6;
+      color: #343a40;
     }
 
     .class-col:hover {
@@ -50,8 +52,18 @@
     }
 
     .active {
-      background-color: #474747 !important;
+      background-color: #6c757d !important;
       color: white !important;
+    }
+
+    /* Styles for the modal */
+    .modal-content {
+      background-color: #ffffff;
+      color: #343a40;
+    }
+
+    .modal-header, .modal-footer {
+      background-color: #f8f9fa;
     }
 
   </style>
@@ -60,7 +72,7 @@
 <header class="schedule-header">
   <div>
     <img src="4.jpg" alt="Profile Picture">
-    <h3>Micah Ella Escarilla</h3>
+    <h3>John Doe</h3>
   </div>
   <div class="datetime">
     <p>Date: <span id="current-date"></span></p>
@@ -100,6 +112,20 @@
       var currentTime = now.toLocaleTimeString('en-US');
       document.getElementById('current-date').textContent = currentDate;
       document.getElementById('current-time').textContent = currentTime;
+
+      // Highlight current day
+      var dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+      var tableRows = document.querySelectorAll('#schedule-body tr');
+      tableRows.forEach(row => {
+        var cells = row.querySelectorAll('.class-col');
+        cells.forEach((cell, index) => {
+          if (index === dayOfWeek) {
+            cell.style.backgroundColor = '#dee2e6';
+          } else {
+            cell.style.backgroundColor = '#ffffff';
+          }
+        });
+      });
     }
 
     // Update date and time every second
@@ -116,35 +142,65 @@
     });
 
     // Generate class schedule
-var scheduleData = [
-{ time: "08:00 AM - 09:00 AM", monday: "", tuesday: "", wednesday: "PE 22 - PATH - FIT IV (World Dances)", thursday: "", friday: "" },
-{ time: "11:00 AM - 04:00 PM", monday: "PSYCH 203 - Experimental Psychology", tuesday: "", wednesday: "", thursday: "", friday: "" },
-{ time: "11:00 AM - 02:00 PM", monday: "", tuesday: "", wednesday: "PSY ELEC 2 - Educational Psychology", thursday: "", friday: "" },
-{ time: "03:00 PM - 06:00 PM", monday: "", tuesday: "", wednesday: "PSYCH 204 - Developmental Psychology", thursday: "", friday: "" },
-{ time: "01:00 PM - 03:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "OLIVARIAN 202 - Career Development Orientation ", friday: "" },
-{ time: "04:00 PM - 07:00 PM", monday: "RIZAL - The Life and Works of Rizal", tuesday: "", wednesday: "", thursday: "", friday: "" },
-{ time: "05:00 PM - 08:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "HUM 1 - Arts Appreciation", friday: "" }
-];
+    var scheduleData = [
+    { time: "08:00 AM - 09:00 AM", monday: "", tuesday: "", wednesday: "PE 22 - PATH - FIT IV (World Dances)", thursday: "", friday: "" },
+    { time: "11:00 AM - 04:00 PM", monday: "PSYCH 203 - Experimental Psychology", tuesday: "", wednesday: "", thursday: "", friday: "" },
+    { time: "11:00 AM - 02:00 PM", monday: "", tuesday: "", wednesday: "PSY ELEC 2 - Educational Psychology", thursday: "", friday: "" },
+    { time: "03:00 PM - 06:00 PM", monday: "", tuesday: "", wednesday: "PSYCH 204 - Developmental Psychology", thursday: "", friday: "" },
+    { time: "01:00 PM - 03:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "OLIVARIAN 202 - Career Development Orientation ", friday: "" },
+    { time: "04:00 PM - 07:00 PM", monday: "RIZAL - The Life and Works of Rizal", tuesday: "", wednesday: "", thursday: "", friday: "" },
+    { time: "05:00 PM - 08:00 PM", monday: "", tuesday: "", wednesday: "", thursday: "HUM 1 - Arts Appreciation", friday: "" }
+    ];
 
-var scheduleBody = document.getElementById('schedule-body');
-scheduleData.forEach(schedule => {
-var row = document.createElement('tr');
-row.innerHTML = `
-  <td class="time-col">${schedule.time}</td>
-  <td class="class-col" id="mon-${schedule.time}">${schedule.monday}</td>
-  <td class="class-col" id="tue-${schedule.time}">${schedule.tuesday}</td>
-  <td class="class-col" id="wed-${schedule.time}">${schedule.wednesday}</td>
-  <td class="class-col" id="thu-${schedule.time}">${schedule.thursday}</td>
-  <td class="class-col" id="fri-${schedule.time}">${schedule.friday}</td>
-`;
-scheduleBody.appendChild(row);
-});
+    var scheduleBody = document.getElementById('schedule-body');
+    scheduleData.forEach(schedule => {
+      var row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="time-col">${schedule.time}</td>
+        <td class="class-col" id="mon-${schedule.time}">${schedule.monday}</td>
+        <td class="class-col" id="tue-${schedule.time}">${schedule.tuesday}</td>
+        <td class="class-col" id="wed-${schedule.time}">${schedule.wednesday}</td>
+        <td class="class-col" id="thu-${schedule.time}">${schedule.thursday}</td>
+        <td class="class-col" id="fri-${schedule.time}">${schedule.friday}</td>
+      `;
+      scheduleBody.appendChild(row);
+    });
 
+    // Show modal if the current day has a schedule
+    var modal = document.getElementById('myModal');
+    var modalContent = document.getElementById('modal-content');
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    var today = new Date().getDay() - 1; // Get index for the current day
+    var todaySchedule = scheduleData[today];
+    if (todaySchedule.monday || todaySchedule.tuesday || todaySchedule.wednesday || todaySchedule.thursday || todaySchedule.friday) {
+      modal.style.display = "block";
+      modalContent.innerHTML = `<p>You have a schedule for today: ${todaySchedule.monday || todaySchedule.tuesday || todaySchedule.wednesday || todaySchedule.thursday || todaySchedule.friday}</p>`;
+    }
 
     // Initial update
     updateDateTime();
   });
 
 </script>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+</div>
+
 </body>
 </html>
